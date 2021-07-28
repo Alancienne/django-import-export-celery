@@ -16,7 +16,8 @@ from django.utils.translation import ugettext as _
 
 from import_export.formats.base_formats import DEFAULT_FORMATS
 
-from . import models
+from .models.exportjob import ExportJob
+from .models.importjob import ImportJob
 from .model_config import ModelConfig
 
 from celery.utils.log import get_task_logger
@@ -182,7 +183,7 @@ def _run_import_job(import_job, dry_run=True):
 @shared_task(bind=False)
 def run_import_job(pk, dry_run=True):
     log.info("Importing %s dry-run %s" % (pk, dry_run))
-    import_job = models.ImportJob.objects.get(pk=pk)
+    import_job = ImportJob.objects.get(pk=pk)
     try:
         _run_import_job(import_job, dry_run)
     except Exception as e:
@@ -195,7 +196,7 @@ def run_import_job(pk, dry_run=True):
 @shared_task(bind=False)
 def run_export_job(pk):
     log.info("Exporting %s" % pk)
-    export_job = models.ExportJob.objects.get(pk=pk)
+    export_job = ExportJob.objects.get(pk=pk)
     resource_class = export_job.get_resource_class()
     queryset = export_job.get_queryset()
     qs_len = len(queryset)
