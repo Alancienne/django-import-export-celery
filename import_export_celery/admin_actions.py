@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from django.urls import reverse
 from django.shortcuts import redirect
 
-from .models import ExportJob
+from .models.exportjob import ExportJob
 
 from . import tasks
 

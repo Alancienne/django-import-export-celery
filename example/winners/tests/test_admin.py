@@ -3,7 +3,8 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 
 from django_admin_smoke_tests import tests
 
-from import_export_celery.models import ExportJob, ImportJob
+from import_export_celery.models.exportjob import ExportJob
+from import_export_celery.models.importjob import ImportJob
 
 
 class AdminSmokeTest(tests.AdminSiteSmokeTest):
